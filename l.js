@@ -67,7 +67,7 @@
     var assetListUrl = currentScript.dataset.assetList;
     if (assetListUrl) {
         var xhr = new XMLHttpRequest();
-        xhr.open('get', assetListUrl);
+        xhr.open('get', assetListUrl + '?_=' + (new Date).getTime());
         xhr.onload = function () {
             var urls = JSON.parse(xhr.responseText);
             var init = function () {
