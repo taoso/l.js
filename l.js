@@ -56,7 +56,6 @@
         if (!isA(arg)) { arg = [ arg ]; }
 
         loader.call(this, arg, arguments.length <= 1 ? undefined : function () {
-            var args = [].slice.call(argv, 1);
             l.apply(self, [].slice.call(argv, 1));
         });
     };
