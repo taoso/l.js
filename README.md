@@ -1,11 +1,10 @@
 l.js
 ----
-
-受[l.js](https://github.com/malko/l.js)启发。
+l.js是一个小巧的异步资源加载工具。l.js完成初始化之后会通过AJAX加载服务端的
+资源列表，然后根据资源列表动态加载js和css。
 
 特性
 ====
-
 - 压缩后不足1k
 - 只支持现代浏览器
 - 并发加载
@@ -14,7 +13,6 @@ l.js
 
 示例
 ====
-
 HTML结构：
 
 ```
@@ -48,3 +46,7 @@ asset-list.json结构：
 为方便开发，l.js对js文件的总入口做了如下预定：
 
     入口js需要定义全局变量App，并定义其init方法，无参数。
+
+鸣谢
+====
+受[l.js](https://github.com/malko/l.js)启发。
