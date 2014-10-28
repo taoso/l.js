@@ -25,14 +25,14 @@
     };
 
     var loaded = {};
-    win.l = function (urls, cb) {
+    var loader = function (urls, cb) {
         var finshedCallback = cb;
 
         var checkLoaded = function (url) {
             loaded[url] = true;
 
             for (var i = urls.length - 1; i>=0 && loaded[urls[i]]; i--);
-            i < 0 && finshedCallback();
+            if (i < 0 && finshedCallback) { finshedCallback(); }
         };
         for (var i = urls.length - 1; i>= 0; i--) {
             var url = urls[i];
@@ -40,6 +40,29 @@
             url.match(/\.js\b/) && !loaded[url] && loadJs(url, checkLoaded);
         }
     };
+
+    var isA = function (obj, type) { return obj instanceof (type || Array); };
+    var l = function () {
+        var self = this;
+
+        var argv = arguments, argc = argv.length;
+
+        if (argc == 1 && isA(argv[0], Function)) {
+            argv[0]();
+            return;
+        }
+
+        var arg = argv[0];
+        if (!isA(arg)) { arg = [ arg ]; }
+
+        loader.call(this, arg, arguments.length <= 1 ? undefined : function () {
+            var args = [].slice.call(argv, 1);
+            l.apply(self, [].slice.call(argv, 1));
+        });
+    };
+
+    win.l = l;
+
     var currentScript = document.querySelector('script[data-asset-list]');
     var assetListUrl = currentScript.dataset.assetList;
     if (assetListUrl) {
@@ -47,13 +70,15 @@
         xhr.open('get', assetListUrl);
         xhr.onload = function () {
             var urls = JSON.parse(xhr.responseText);
-            win.l(urls, function () {
+            var init = function () {
                 if (win.App) {
                     App.init();
                 } else {
                     console.log('no App.init() defined');
                 }
-            });
+            }
+            urls.push(init);
+            l.apply(this, urls);
         };
         xhr.send();
     }
