@@ -1,0 +1,21 @@
+{
+  "name": "l.js",
+  "main": "l.js",
+  "version": "0.0.1",
+  "authors": [
+    "Jalen Lyu <jalen.lyu@gmail.com>"
+  ],
+  "description": "Tiny web assets loader.",
+  "keywords": [
+    "l.js"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jlyu/l.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
