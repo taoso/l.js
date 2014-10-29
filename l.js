@@ -68,16 +68,16 @@
         var xhr = new XMLHttpRequest();
         xhr.open('get', assetListUrl + '?_=' + (new Date).getTime());
         xhr.onload = function () {
-            var urls = JSON.parse(xhr.responseText);
+            var args = JSON.parse(xhr.responseText);
             var init = function () {
-                if (win.App) {
+                if (App && App.init) {
                     App.init();
                 } else {
                     console.log('no App.init() defined');
                 }
             }
-            urls.push(init);
-            l.apply(this, urls);
+            args.push(init);
+            l.apply(this, args);
         };
         xhr.send();
     }
